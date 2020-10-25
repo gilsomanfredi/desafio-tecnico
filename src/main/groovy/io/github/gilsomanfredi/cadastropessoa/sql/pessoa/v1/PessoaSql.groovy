@@ -38,9 +38,9 @@ class PessoaSql {
 
     public static final String insert = """
         INSERT INTO public.pessoa(nome, cpf, sexo, email, data_nascimento, 
-			naturalidade, nacionalidade, data_inclusao, data_alteracao)
+			naturalidade, nacionalidade, endereco, data_inclusao, data_alteracao)
         VALUES (:nome, :cpf, :sexo, :email, :data_nascimento, 
-			:naturalidade, :nacionalidade, :data_inclusao, :data_alteracao)
+			:naturalidade, :nacionalidade, '', :data_inclusao, :data_alteracao)
     """
 
     public static final String update = """
