@@ -18,6 +18,13 @@
 		<java.version>11</java.version>
 		
 		<caelum-stella.version>2.1.4</caelum-stella.version>
+		<groovy-eclipse-compiler.version>3.6.0-01</groovy-eclipse-compiler.version>
+		<groovy-eclipse-batch.version>3.0.0-01</groovy-eclipse-batch.version>
+
+		<docker.image.prefix>gilsomanfredi</docker.image.prefix>
+		<docker.image.name>desafio-tecnico-softplan</docker.image.name>
+		<docker.image.version>latest</docker.image.version>
+		<default.packaging>${project.packaging}</default.packaging>
 	</properties>
 
 	<dependencies>
@@ -89,9 +96,60 @@
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+
+				<configuration>
+					<compilerId>groovy-eclipse-compiler</compilerId>
+					<verbose>true</verbose>
+					<compilerArguments>
+						<javaAgentClass>lombok.launch.Agent</javaAgentClass>
+					</compilerArguments>
+					<fork>true</fork>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-eclipse-compiler</artifactId>
+						<version>${groovy-eclipse-compiler.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-eclipse-batch</artifactId>
+						<version>${groovy-eclipse-batch.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+						<version>${lombok.version}</version>
+						<scope>compile</scope>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<!-- https://medium.com/@fernandoevangelista_28291/criando-e-enviando-imagem-docker-com-java-e-maven-4fa3c70dba0f -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.10</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${docker.image.name}</repository>
+					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+					<tag>${docker.image.version}</tag>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.${default.packaging}</JAR_FILE>
+					</buildArgs>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

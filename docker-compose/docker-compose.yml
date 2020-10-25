@@ -1,6 +1,17 @@
 version: '3.0'
 
 services:
+#  java:
+#    container_name: desafio-tecnico-app
+#    hostname: desafiotecnico-app
+#    image: gilsomanfredi/desafio-tecnico-softplan:latest
+#    ports:
+#      - "8585:8585"
+#    environment:
+#      JAVA_OPTS: "-Dspring.datasource.url=jdbc:postgresql://desafiotecnico-db:5432/desafiotecnico -Dspring.datasource.username=desafiotecnico -Dspring.datasource.password=PW@234"
+#    networks:
+#      - app-network
+
   postgres:
     container_name: desafiotecnico-db
     hostname: desafiotecnico-db
