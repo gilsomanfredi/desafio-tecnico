@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.gilsomanfredi.cadastropessoa.model.apierror.ApiError;
+import io.github.gilsomanfredi.cadastropessoa.model.apierror.ApiFieldError;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @ControllerAdvice
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
@@ -31,11 +35,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = { ValidacaoException.class })
     protected ResponseEntity<Object> handleValidacao(ValidacaoException ex, WebRequest request) {
 
-    	var status = HttpStatus.INTERNAL_SERVER_ERROR;
+    	var status = HttpStatus.BAD_REQUEST;
         var apiError = new ApiError(status, LocalDateTime.now(), i18n.getMessage(ex.getMessage(), ex.getArgs()));
+
+        log.error(ex.getMessage(), ex);
     	
     	return handleExceptionInternal(ex, apiError, new HttpHeaders(), 
-    			HttpStatus.BAD_REQUEST, request);
+    			status, request);
     }
  
     @ExceptionHandler(value = { Exception.class })
@@ -43,7 +49,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     	
     	var status = HttpStatus.INTERNAL_SERVER_ERROR;
         var apiError = new ApiError(status, LocalDateTime.now(), i18n.getMessage("houve.erro.servidor"));
-    	
+
+        log.error(ex.getMessage(), ex);
+
     	return handleExceptionInternal(ex, apiError, new HttpHeaders(), 
     			status, request);
     }
@@ -65,37 +73,5 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         return handleExceptionInternal(ex, apiError, headers, status, request);
-    }
-
-    @Getter
-    static class ApiError {
-        HttpStatus status;
-        LocalDateTime date;
-        String message;
-        List<ApiFieldError> errors;
-
-        public ApiError(HttpStatus status, LocalDateTime date, String message) {
-            this.status = status;
-            this.date = date;
-            this.message = message;
-        }
-
-        public void addError(ApiFieldError apiFieldError) {
-            if (errors == null) {
-                errors = new ArrayList<>();
-            }
-            errors.add(apiFieldError);
-        }
-    }
-
-    @Getter
-    static class ApiFieldError {
-        String field;
-        String error;
-
-        public ApiFieldError(String field, String error) {
-            this.field = field;
-            this.error = error;
-        }
     }
 }
