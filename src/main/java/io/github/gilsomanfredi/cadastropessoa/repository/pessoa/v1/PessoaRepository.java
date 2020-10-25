@@ -1,4 +1,4 @@
-package io.github.gilsomanfredi.cadastropessoa.repository.pessoa;
+package io.github.gilsomanfredi.cadastropessoa.repository.pessoa.v1;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,10 +8,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import io.github.gilsomanfredi.cadastropessoa.model.pessoa.Pessoa;
-import io.github.gilsomanfredi.cadastropessoa.repository.pessoa.mapper.PessoaRowMapper;
+import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v1.Pessoa;
+import io.github.gilsomanfredi.cadastropessoa.repository.pessoa.v1.mapper.PessoaRowMapper;
 import io.github.gilsomanfredi.cadastropessoa.repository.template.PostgresRepositoryTemplate;
-import io.github.gilsomanfredi.cadastropessoa.sql.pessoa.PessoaSql;
+import io.github.gilsomanfredi.cadastropessoa.sql.pessoa.v1.PessoaSql;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package io.github.gilsomanfredi.cadastropessoa.service.pessoa;
+package io.github.gilsomanfredi.cadastropessoa.service.pessoa.v1;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.github.gilsomanfredi.cadastropessoa.config.exception.ValidacaoException;
-import io.github.gilsomanfredi.cadastropessoa.model.pessoa.Pessoa;
-import io.github.gilsomanfredi.cadastropessoa.repository.pessoa.PessoaRepository;
+import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v1.Pessoa;
+import io.github.gilsomanfredi.cadastropessoa.repository.pessoa.v1.PessoaRepository;
+import io.github.gilsomanfredi.cadastropessoa.validation.pessoa.PessoaValidator;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +19,9 @@ public class PessoaService {
 
     private final @NonNull
     PessoaRepository pessoaRepository;
+
+    private final @NonNull
+    PessoaValidator pessoaValidator;
 
     public List<Pessoa> findAll() {
 
@@ -35,7 +38,7 @@ public class PessoaService {
         pessoa.setDataInclusao(LocalDate.now());
         pessoa.setDataAlteracao(LocalDate.now());
         
-        valida(pessoa);
+        pessoaValidator.valida(pessoa);
 
         return pessoaRepository.insert(pessoa);
     }
@@ -44,7 +47,7 @@ public class PessoaService {
 
         pessoa.setDataAlteracao(LocalDate.now());
         
-        valida(pessoa);
+        pessoaValidator.valida(pessoa);
 
         return pessoaRepository.update(id, pessoa);
     }
@@ -58,15 +61,4 @@ public class PessoaService {
 
         return pessoaRepository.existsById(id);
     }
-
-	private void valida(Pessoa pessoa) {
-
-		if (pessoa.getDataNascimento() == null || pessoa.getDataNascimento().isAfter(LocalDate.now())) {
-			throw new ValidacaoException("data.nascimento.invalida");
-		}
-		
-		if (pessoaRepository.existsCpf(pessoa)) {
-			throw new ValidacaoException("cpf.ja.cadastrado");
-		}
-	}	
 }

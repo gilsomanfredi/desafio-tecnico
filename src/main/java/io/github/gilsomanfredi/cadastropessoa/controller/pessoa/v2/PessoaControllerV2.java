@@ -1,4 +1,4 @@
-package io.github.gilsomanfredi.cadastropessoa.controller.pessoa;
+package io.github.gilsomanfredi.cadastropessoa.controller.pessoa.v2;
 
 import java.util.List;
 
@@ -17,51 +17,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.gilsomanfredi.cadastropessoa.model.pessoa.Pessoa;
-import io.github.gilsomanfredi.cadastropessoa.service.pessoa.PessoaService;
+import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v2.PessoaV2;
+import io.github.gilsomanfredi.cadastropessoa.service.pessoa.v2.PessoaServiceV2;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/pessoa")
+@RequestMapping("/pessoa/v2")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class PessoaController {
+public class PessoaControllerV2 {
 
     private final @NonNull
-    PessoaService pessoaService;
+    PessoaServiceV2 pessoaServiceV2;
 
     @GetMapping
-    public List<Pessoa> findAll() {
+    public List<PessoaV2> findAll() {
 
-        return pessoaService.findAll();
+        return pessoaServiceV2.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pessoa> findById(@PathVariable Long id) {
+    public ResponseEntity<PessoaV2> findById(@PathVariable Long id) {
 
-        return ResponseEntity.of(pessoaService.findById(id));
+        return ResponseEntity.of(pessoaServiceV2.findById(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pessoa insert(@Valid @RequestBody Pessoa pessoa) {
+    public PessoaV2 insert(@Valid @RequestBody PessoaV2 pessoa) {
 
-        return pessoaService.insert(pessoa);
+        return pessoaServiceV2.insert(pessoa);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pessoa> update(@PathVariable Long id, @Valid @RequestBody Pessoa pessoa) {
+    public ResponseEntity<PessoaV2> update(@PathVariable Long id, @Valid @RequestBody PessoaV2 pessoa) {
 
-        return pessoaService.existsById(id)
-                ? ResponseEntity.ok(pessoaService.update(id, pessoa))
+        return pessoaServiceV2.existsById(id)
+                ? ResponseEntity.ok(pessoaServiceV2.update(id, pessoa))
                 : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Pessoa> delete(@PathVariable Long id) {
+    public ResponseEntity<PessoaV2> delete(@PathVariable Long id) {
 
-        if (pessoaService.existsById(id)) {
-            pessoaService.delete(id);
+        if (pessoaServiceV2.existsById(id)) {
+        	pessoaServiceV2.delete(id);
             return ResponseEntity.noContent().build();
         }
 

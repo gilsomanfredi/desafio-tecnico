@@ -1,12 +1,12 @@
-package io.github.gilsomanfredi.cadastropessoa.repository.pessoa.mapper;
+package io.github.gilsomanfredi.cadastropessoa.repository.pessoa.v1.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import io.github.gilsomanfredi.cadastropessoa.model.pessoa.Pessoa;
-import io.github.gilsomanfredi.cadastropessoa.model.pessoa.SexoEnum;
+import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v1.Pessoa;
+import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v1.SexoEnum;
 
 public class PessoaRowMapper implements RowMapper<Pessoa> {
 

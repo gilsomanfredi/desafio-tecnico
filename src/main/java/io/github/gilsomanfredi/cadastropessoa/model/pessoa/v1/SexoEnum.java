@@ -1,4 +1,4 @@
-package io.github.gilsomanfredi.cadastropessoa.model.pessoa;
+package io.github.gilsomanfredi.cadastropessoa.model.pessoa.v1;
 
 import java.util.stream.Stream;
 
