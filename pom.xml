@@ -16,6 +16,8 @@
 
 	<properties>
 		<java.version>11</java.version>
+		
+		<caelum-stella.version>2.1.4</caelum-stella.version>
 	</properties>
 
 	<dependencies>
@@ -51,6 +53,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Tests -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -62,6 +65,26 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>br.com.caelum.stella</groupId>
+			<artifactId>caelum-stella-core</artifactId>
+			<version>${caelum-stella.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
