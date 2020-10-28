@@ -4,21 +4,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 import io.github.gilsomanfredi.cadastropessoa.RunApplicationTests;
-import io.github.gilsomanfredi.cadastropessoa.config.i18n.I18n;
 import io.github.gilsomanfredi.cadastropessoa.factory.pessoa.v2.PessoaV2Factory;
+import io.github.gilsomanfredi.cadastropessoa.factory.util.UtilFactory;
 import io.github.gilsomanfredi.cadastropessoa.model.apierror.ApiError;
 import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v2.PessoaV2;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class PessoaV2integrationTest extends RunApplicationTests {
-
-    @Autowired
-    private I18n i18n;
 
     @Test
     public void find_all() {
@@ -103,9 +99,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotEmpty"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotEmpty", i("pessoa.nome")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -121,16 +117,16 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotEmpty"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotEmpty", i("pessoa.nome")), apiError.getErrors().get(0).getError());
     }
 
     @Test
     public void insert_with_cpf_invalido() {
 
         PessoaV2 pessoa = PessoaV2Factory.createPessoa();
-        pessoa.setCpf(RandomStringUtils.randomNumeric(11));
+        pessoa.setCpf(UtilFactory.randomInvalidCpf());
 
         ResponseEntity<ApiError> responseError = post(PessoaV2Factory.getUrlPost(), pessoa, ApiError.class);
 
@@ -139,9 +135,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("CPF"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("CPF", i("pessoa.cpf")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -163,7 +159,7 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("cpf.ja.cadastrado"), apiError.getMessage());
+        Assert.assertEquals(i("cpf.ja.cadastrado"), apiError.getMessage());
     }
 
     @Test
@@ -179,9 +175,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("Email"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("Email", i("pessoa.email")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -197,9 +193,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotNull"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotNull", i("pessoa.dataNascimento")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -215,7 +211,7 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("data.nascimento.invalida"), apiError.getMessage());
+        Assert.assertEquals(i("data.nascimento.invalida"), apiError.getMessage());
     }
 
     @Test
@@ -231,9 +227,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotEmpty"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotEmpty", i("pessoa.endereco")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -249,9 +245,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotEmpty"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotEmpty", i("pessoa.endereco")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -298,9 +294,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotEmpty"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotEmpty", i("pessoa.nome")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -324,9 +320,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotEmpty"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotEmpty", i("pessoa.nome")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -341,7 +337,7 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         Assert.assertNotNull(pessoa);
         Assert.assertNotNull(pessoa.getId());
 
-        pessoa.setCpf(RandomStringUtils.randomNumeric(11));
+        pessoa.setCpf(UtilFactory.randomInvalidCpf());
 
         ResponseEntity<ApiError> responseError = put(PessoaV2Factory.getUrlPut(pessoa.getId()), pessoa, ApiError.class);
 
@@ -350,9 +346,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("CPF"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("CPF", i("pessoa.cpf")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -379,7 +375,7 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("cpf.ja.cadastrado"), apiError.getMessage());
+        Assert.assertEquals(i("cpf.ja.cadastrado"), apiError.getMessage());
     }
 
     @Test
@@ -403,9 +399,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("Email"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("Email", i("pessoa.email")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -429,9 +425,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotNull"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotNull", i("pessoa.dataNascimento")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -455,7 +451,7 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("data.nascimento.invalida"), apiError.getMessage());
+        Assert.assertEquals(i("data.nascimento.invalida"), apiError.getMessage());
     }
 
     @Test
@@ -479,9 +475,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotEmpty"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotEmpty", i("pessoa.endereco")), apiError.getErrors().get(0).getError());
     }
 
     @Test
@@ -505,9 +501,9 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         ApiError apiError = responseError.getBody();
 
         Assert.assertNotNull(apiError);
-        Assert.assertEquals(i18n.getMessage("mensagem.validacao.dados"), apiError.getMessage());
+        Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
-        Assert.assertEquals(i18n.getMessage("NotEmpty"), apiError.getErrors().get(0).getError());
+        Assert.assertEquals(i("NotEmpty", i("pessoa.endereco")), apiError.getErrors().get(0).getError());
     }
 
     @Test

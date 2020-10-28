@@ -1,15 +1,15 @@
 package io.github.gilsomanfredi.cadastropessoa.model.apierror;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApiFieldError {
 
-    String field;
-    String error;
+    private String field;
+    private String error;
 
-    public ApiFieldError(String field, String error) {
-        this.field = field;
-        this.error = error;
-    }
 }
