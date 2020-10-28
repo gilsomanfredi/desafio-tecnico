@@ -1,11 +1,11 @@
 package io.github.gilsomanfredi.cadastropessoa.controller.pessoa.v1;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v1.Pessoa;
 import io.github.gilsomanfredi.cadastropessoa.service.pessoa.v1.PessoaService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/pessoa")
@@ -43,10 +43,16 @@ public class PessoaController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Pessoa insert(@Valid @RequestBody Pessoa pessoa) {
+    public ResponseEntity<Pessoa> insert(@Valid @RequestBody Pessoa pessoa) {
 
-        return pessoaService.insert(pessoa);
+        pessoaService.insert(pessoa);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .path("/{codigo}")
+                .buildAndExpand(pessoa.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(pessoa);
     }
 
     @PutMapping("/{id}")

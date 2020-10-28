@@ -1,11 +1,11 @@
 package io.github.gilsomanfredi.cadastropessoa.controller.pessoa.v2;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v2.PessoaV2;
 import io.github.gilsomanfredi.cadastropessoa.service.pessoa.v2.PessoaServiceV2;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/pessoa/v2")
@@ -43,10 +43,16 @@ public class PessoaControllerV2 {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public PessoaV2 insert(@Valid @RequestBody PessoaV2 pessoa) {
+    public ResponseEntity<PessoaV2> insert(@Valid @RequestBody PessoaV2 pessoa) {
 
-        return pessoaServiceV2.insert(pessoa);
+        pessoaServiceV2.insert(pessoa);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .path("/{codigo}")
+                .buildAndExpand(pessoa.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(pessoa);
     }
 
     @PutMapping("/{id}")
