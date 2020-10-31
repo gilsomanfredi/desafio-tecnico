@@ -12,6 +12,10 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -61,6 +65,36 @@ public class PostgresRepositoryTemplate {
     public <T> List<T> query(String sql, Map<String, Object> parameters, RowMapper<T> rowMapper) {
 
         return getJdbcTemplate().query(sql, parameters, rowMapper);
+    }
+
+    public <T> Page<T> query(String sql, RowMapper<T> rowMapper, Pageable pageable) {
+
+        return query(sql, new HashMap<>(), rowMapper, pageable);
+    }
+
+    public <T> Page<T> query(String sql, Map<String, Object> parameters, RowMapper<T> rowMapper, Pageable pageable) {
+
+        String sqlPaginacao;
+        Long quantidade = count(sql, parameters);
+
+        if (sql != null && pageable != null) {
+            int limit = pageable.getPageSize();
+            int offset = (pageable.getPageNumber()) * pageable.getPageSize();
+            sqlPaginacao = String.format("%s limit %d offset %d", sql, limit, offset);
+        } else {
+            sqlPaginacao = sql;
+        }
+
+        List<T> list = getJdbcTemplate().query(sqlPaginacao, parameters, rowMapper);
+
+        return new PageImpl<>(list, pageable, quantidade);
+    }
+
+    public Long count(String sql, Map<String, Object> parameters) {
+
+        String sqlCount = String.format("SELECT COUNT(*) FROM ( %s ) AS temp", sql);
+
+        return getJdbcTemplate().queryForObject(sqlCount, parameters, Long.class);
     }
 
     public Long insert(String sql, Map<String, Object> parameters, Class<?> clazz) {

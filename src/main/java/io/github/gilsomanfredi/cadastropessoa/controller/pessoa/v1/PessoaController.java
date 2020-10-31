@@ -1,11 +1,12 @@
 package io.github.gilsomanfredi.cadastropessoa.controller.pessoa.v1;
 
 import java.net.URI;
-import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +32,9 @@ public class PessoaController {
     PessoaService pessoaService;
 
     @GetMapping
-    public List<Pessoa> findAll() {
+    public Page<Pessoa> findAll(Pageable pageable) {
 
-        return pessoaService.findAll();
+        return pessoaService.findAll(pageable);
     }
 
     @GetMapping("/{id}")

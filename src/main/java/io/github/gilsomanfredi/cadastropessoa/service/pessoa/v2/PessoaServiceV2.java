@@ -1,10 +1,11 @@
 package io.github.gilsomanfredi.cadastropessoa.service.pessoa.v2;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v2.PessoaV2;
@@ -27,9 +28,9 @@ public class PessoaServiceV2 {
     private final @NonNull
     PessoaValidator pessoaValidator;
 
-    public List<PessoaV2> findAll() {
+    public Page<PessoaV2> findAll(Pageable pageable) {
 
-        return pessoaRepositoryV2.findAll();
+        return pessoaRepositoryV2.findAll(pageable);
     }
 
     public Optional<PessoaV2> findById(Long id) {

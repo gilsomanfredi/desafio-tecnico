@@ -1,11 +1,12 @@
 package io.github.gilsomanfredi.cadastropessoa.repository.pessoa.v1;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v1.Pessoa;
@@ -22,9 +23,9 @@ public class PessoaRepository {
     private final @NonNull
     PostgresRepositoryTemplate repositoryTemplate;
 
-    public List<Pessoa> findAll() {
+    public Page<Pessoa> findAll(Pageable pageable) {
 
-        return repositoryTemplate.query(PessoaSql.select, new PessoaRowMapper());
+        return repositoryTemplate.query(PessoaSql.select, new PessoaRowMapper(), pageable);
     }
 
     public Optional<Pessoa> findById(Long id) {
