@@ -1,7 +1,7 @@
 package io.github.gilsomanfredi.cadastropessoa.test.pessoa.v2;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 import io.github.gilsomanfredi.cadastropessoa.RunApplicationTests;
 import io.github.gilsomanfredi.cadastropessoa.factory.pessoa.v2.PessoaV2Factory;
@@ -23,11 +23,11 @@ public class PessoaV2integrationTest extends RunApplicationTests {
 
         Assert.assertEquals(HttpStatus.CREATED, responsePost.getStatusCode());
 
-        ResponseEntity<List> responseGet = get(PessoaV2Factory.getUrlGet(), List.class);
+        ResponseEntity<Map> responseGet = get(PessoaV2Factory.getUrlGet(), Map.class);
 
         Assert.assertEquals(HttpStatus.OK, responseGet.getStatusCode());
         Assert.assertNotNull(responseGet.getBody());
-        Assert.assertFalse(responseGet.getBody().isEmpty());
+        Assert.assertFalse((boolean) responseGet.getBody().get("empty"));
     }
 
     @Test
@@ -540,7 +540,7 @@ public class PessoaV2integrationTest extends RunApplicationTests {
     @Test
     public void delete_with_not_exists_id() {
 
-        ResponseEntity<Void> responsePut = delete(PessoaV2Factory.getUrlPut(-1L));
+        ResponseEntity<Void> responsePut = delete(PessoaV2Factory.getUrlDelete(-1L));
 
         Assert.assertEquals(HttpStatus.NOT_FOUND, responsePut.getStatusCode());
     }
