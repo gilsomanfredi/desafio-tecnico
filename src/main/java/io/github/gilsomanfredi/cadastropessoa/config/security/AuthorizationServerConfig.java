@@ -30,7 +30,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     UserDetailsService userDetailsService;
 
     @Bean
-    public JwtAccessTokenConverter tokenEnhancer() {
+    public JwtAccessTokenConverter tokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey("mysecretkey");
         return converter;
@@ -38,7 +38,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     public JwtTokenStore tokenStore() {
-        return new JwtTokenStore(tokenEnhancer());
+        return new JwtTokenStore(tokenConverter());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints.authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
                 .tokenStore(tokenStore())
-                .accessTokenConverter(tokenEnhancer())
+                .accessTokenConverter(tokenConverter())
                 .reuseRefreshTokens(false);
     }
 }
