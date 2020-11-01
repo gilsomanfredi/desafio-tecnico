@@ -24,6 +24,7 @@ public class Pessoa {
     @Size(max = 50)
     private String nome;
 
+    @NotEmpty
     @CPF
     private String cpf;
 

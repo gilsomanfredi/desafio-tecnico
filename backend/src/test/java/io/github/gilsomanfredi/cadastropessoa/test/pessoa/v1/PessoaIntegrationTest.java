@@ -181,6 +181,28 @@ public class PessoaIntegrationTest extends RunApplicationTests {
     }
 
     @Test
+    public void insert_with_email_nulo() {
+
+        Pessoa pessoa = PessoaFactory.createPessoa();
+        pessoa.setEmail(null);
+
+        ResponseEntity<Pessoa> responseError = post(PessoaFactory.getUrlPost(), pessoa, Pessoa.class);
+
+        Assert.assertEquals(HttpStatus.CREATED, responseError.getStatusCode());
+    }
+
+    @Test
+    public void insert_with_email_vazio() {
+
+        Pessoa pessoa = PessoaFactory.createPessoa();
+        pessoa.setEmail("");
+
+        ResponseEntity<Pessoa> responseError = post(PessoaFactory.getUrlPost(), pessoa, Pessoa.class);
+
+        Assert.assertEquals(HttpStatus.CREATED, responseError.getStatusCode());
+    }
+
+    @Test
     public void insert_with_data_nascimento_null() {
 
         Pessoa pessoa = PessoaFactory.createPessoa();
@@ -366,6 +388,44 @@ public class PessoaIntegrationTest extends RunApplicationTests {
         Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
         Assert.assertEquals(i("Email", i("pessoa.email")), apiError.getErrors().get(0).getError());
+    }
+
+    @Test
+    public void update_with_email_nulo() {
+
+        ResponseEntity<Pessoa> responsePost = post(PessoaFactory.getUrlPost(), PessoaFactory.createPessoa(), Pessoa.class);
+
+        Assert.assertEquals(HttpStatus.CREATED, responsePost.getStatusCode());
+
+        Pessoa pessoa = responsePost.getBody();
+
+        Assert.assertNotNull(pessoa);
+        Assert.assertNotNull(pessoa.getId());
+
+        pessoa.setEmail(null);
+
+        ResponseEntity<Pessoa> responseError = put(PessoaFactory.getUrlPut(pessoa.getId()), pessoa, Pessoa.class);
+
+        Assert.assertEquals(HttpStatus.OK, responseError.getStatusCode());
+    }
+
+    @Test
+    public void update_with_email_vazio() {
+
+        ResponseEntity<Pessoa> responsePost = post(PessoaFactory.getUrlPost(), PessoaFactory.createPessoa(), Pessoa.class);
+
+        Assert.assertEquals(HttpStatus.CREATED, responsePost.getStatusCode());
+
+        Pessoa pessoa = responsePost.getBody();
+
+        Assert.assertNotNull(pessoa);
+        Assert.assertNotNull(pessoa.getId());
+
+        pessoa.setEmail("");
+
+        ResponseEntity<Pessoa> responseError = put(PessoaFactory.getUrlPut(pessoa.getId()), pessoa, Pessoa.class);
+
+        Assert.assertEquals(HttpStatus.OK, responseError.getStatusCode());
     }
 
     @Test

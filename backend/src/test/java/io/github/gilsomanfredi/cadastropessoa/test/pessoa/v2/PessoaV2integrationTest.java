@@ -181,6 +181,28 @@ public class PessoaV2integrationTest extends RunApplicationTests {
     }
 
     @Test
+    public void insert_with_email_nulo() {
+
+        PessoaV2 pessoa = PessoaV2Factory.createPessoa();
+        pessoa.setEmail(null);
+
+        ResponseEntity<PessoaV2> responseError = post(PessoaV2Factory.getUrlPost(), pessoa, PessoaV2.class);
+
+        Assert.assertEquals(HttpStatus.CREATED, responseError.getStatusCode());
+    }
+
+    @Test
+    public void insert_with_email_vazio() {
+
+        PessoaV2 pessoa = PessoaV2Factory.createPessoa();
+        pessoa.setEmail("");
+
+        ResponseEntity<PessoaV2> responseError = post(PessoaV2Factory.getUrlPost(), pessoa, PessoaV2.class);
+
+        Assert.assertEquals(HttpStatus.CREATED, responseError.getStatusCode());
+    }
+
+    @Test
     public void insert_with_data_nascimento_null() {
 
         PessoaV2 pessoa = PessoaV2Factory.createPessoa();
@@ -402,6 +424,44 @@ public class PessoaV2integrationTest extends RunApplicationTests {
         Assert.assertEquals(i("mensagem.validacao.dados"), apiError.getMessage());
         Assert.assertFalse(apiError.getErrors().isEmpty());
         Assert.assertEquals(i("Email", i("pessoa.email")), apiError.getErrors().get(0).getError());
+    }
+
+    @Test
+    public void update_with_email_nulo() {
+
+        ResponseEntity<PessoaV2> responsePost = post(PessoaV2Factory.getUrlPost(), PessoaV2Factory.createPessoa(), PessoaV2.class);
+
+        Assert.assertEquals(HttpStatus.CREATED, responsePost.getStatusCode());
+
+        PessoaV2 pessoa = responsePost.getBody();
+
+        Assert.assertNotNull(pessoa);
+        Assert.assertNotNull(pessoa.getId());
+
+        pessoa.setEmail(null);
+
+        ResponseEntity<PessoaV2> responseError = put(PessoaV2Factory.getUrlPut(pessoa.getId()), pessoa, PessoaV2.class);
+
+        Assert.assertEquals(HttpStatus.OK, responseError.getStatusCode());
+    }
+
+    @Test
+    public void update_with_email_vazio() {
+
+        ResponseEntity<PessoaV2> responsePost = post(PessoaV2Factory.getUrlPost(), PessoaV2Factory.createPessoa(), PessoaV2.class);
+
+        Assert.assertEquals(HttpStatus.CREATED, responsePost.getStatusCode());
+
+        PessoaV2 pessoa = responsePost.getBody();
+
+        Assert.assertNotNull(pessoa);
+        Assert.assertNotNull(pessoa.getId());
+
+        pessoa.setEmail("");
+
+        ResponseEntity<PessoaV2> responseError = put(PessoaV2Factory.getUrlPut(pessoa.getId()), pessoa, PessoaV2.class);
+
+        Assert.assertEquals(HttpStatus.OK, responseError.getStatusCode());
     }
 
     @Test
