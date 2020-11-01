@@ -24,6 +24,8 @@ public abstract class RunApplicationTests {
 	private static final String CLIENT_ID = "CadastroPessoaClient";
 	private static final String CLIENT_PASS = "C4d4str0P3ss04";
 
+	private static HttpHeaders authHeaders;
+
 	@Autowired
 	protected TestRestTemplate restTemplate;
 
@@ -59,10 +61,12 @@ public abstract class RunApplicationTests {
 	}
 
 	private HttpHeaders getHeaders(){
-		HttpHeaders authHeaders = new HttpHeaders();
-		authHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		authHeaders.add("Authorization", "Bearer ".concat(getBearerToken()));
-		authHeaders.add("Content-Type", "application/json");
+		if (authHeaders == null) {
+			authHeaders = new HttpHeaders();
+			authHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+			authHeaders.add("Authorization", "Bearer ".concat(getBearerToken()));
+			authHeaders.add("Content-Type", "application/json");
+		}
 
 		return authHeaders;
 	}
