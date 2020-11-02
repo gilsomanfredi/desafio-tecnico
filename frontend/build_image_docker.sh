@@ -14,14 +14,14 @@ if [ "x$PASS" = "x" ]; then
     exit
 fi
 
-echo "Executando mvn clean install......................................."
-mvn clean install -DskipTests
+echo "Executando npm run build..........................................."
+npm run build-prod
 
 echo "Gerando imagem docker.............................................."
-docker build -t $USER/desafio-tecnico-softplan-backend --build-arg JAR_FILE=target/*.jar .
+docker build -t $USER/desafio-tecnico-softplan-frontend .
 
 echo "Logando no docker.................................................."
 docker login -u $USER -p $PASS
 
 echo "Enviando imagem...................................................."
-docker push $USER/desafio-tecnico-softplan-backend
+docker push $USER/desafio-tecnico-softplan-frontend

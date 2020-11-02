@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:8585/api'
+  baseUrl: 'http://desafio-tecnico-softplan-backend:8080/api'
 };

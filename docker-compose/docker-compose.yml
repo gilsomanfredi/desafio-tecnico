@@ -1,16 +1,25 @@
 version: '3.0'
 
 services:
-#  java:
-#    container_name: desafio-tecnico-app
-#    hostname: desafiotecnico-app
-#    image: gilsomanfredi/desafio-tecnico-softplan:latest
-#    ports:
-#      - "8585:8585"
-#    environment:
-#      JAVA_OPTS: "-Dspring.datasource.url=jdbc:postgresql://desafiotecnico-db:5432/desafiotecnico -Dspring.datasource.username=desafiotecnico -Dspring.datasource.password=PW@234"
-#    networks:
-#      - app-network
+  java:
+    container_name: desafio-tecnico-api
+    hostname: desafiotecnico-api
+    image: gilsomanfredi/desafio-tecnico-softplan-backend:latest
+    ports:
+      - "8585:8080"
+    environment:
+      JAVA_OPTS: "-Dserver.port=8080 -Dspring.datasource.url=jdbc:postgresql://desafiotecnico-db:5432/desafiotecnico -Dspring.datasource.username=desafiotecnico -Dspring.datasource.password=PW@234"
+    networks:
+      - app-network
+  
+  angular:
+    container_name: desafio-tecnico-ui
+    hostname: desafio-tecnico-ui
+    image: gilsomanfredi/desafio-tecnico-softplan-frontend:latest
+    ports:
+      - "81:80"
+    networks:
+      - app-network
 
   postgres:
     container_name: desafiotecnico-db
@@ -22,26 +31,26 @@ services:
       POSTGRES_USER: "desafiotecnico"
       POSTGRES_PASSWORD: "PW@234"
       POSTGRES_DB: "desafiotecnico"
-#    volumes:
-#      - ./postgresql/data:/var/lib/postgresql/data
+    # volumes:
+    #   - ./postgresql/data:/var/lib/postgresql/data
     networks:
       - app-network
 
-  pgadmin4:
-    container_name: pgadmin4
-    hostname: pgadmin4
-    image: dpage/pgadmin4
-    ports:
-      - "16543:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "pgadmin4@postgres"
-      PGADMIN_DEFAULT_PASSWORD: "pgadmin4@234"
-    volumes:
-      - ./pgadmin:/var/lib/pgadmin
-    depends_on:
-      - postgres
-    networks:
-      - app-network
+#  pgadmin4:
+#    container_name: pgadmin4
+#    hostname: pgadmin4
+#    image: dpage/pgadmin4
+#    ports:
+#      - "16543:80"
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: "pgadmin4@postgres"
+#      PGADMIN_DEFAULT_PASSWORD: "pgadmin4@234"
+#    # volumes:
+#    #   - ./pgadmin:/var/lib/pgadmin
+#    depends_on:
+#      - postgres
+#    networks:
+#      - app-network
 
 networks:
   app-network:
