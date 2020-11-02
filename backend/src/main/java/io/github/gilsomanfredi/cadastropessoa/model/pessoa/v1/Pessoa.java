@@ -12,6 +12,7 @@ import org.springframework.data.annotation.Id;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -35,6 +36,7 @@ public class Pessoa {
     private String email;
 
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataNascimento;
 
     @Size(max = 50)
