@@ -20,7 +20,6 @@ export class ListarPessoasComponent implements OnInit {
 
   load() {
     this.pessoas = this.pessoaV2Service.getAll();
-    console.log(this.pessoas);
   }
 
   delete(id: number) {
