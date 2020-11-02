@@ -2,17 +2,17 @@
 <div [hidden]="submitted" style="width: 400px;">
     <form (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="name">Nome</label>
+            <label for="nome">Nome</label>
             <input type="text" class="form-control" id="nome" required [(ngModel)]="pessoa.nome" name="nome">
         </div>
 
         <div class="form-group">
-            <label for="name">CPF</label>
+            <label for="cpf">CPF</label>
             <input type="text" class="form-control" id="cpf" required [(ngModel)]="pessoa.cpf" name="cpf" mask="000.000.000-00">
         </div>
 
         <div class="form-group">
-            <label for="name">Sexo</label>
+            <label for="sexo">Sexo</label>
             <select class="form-control" id="sexo" [(ngModel)]="pessoa.sexo" name="sexo">
               <option value="FEMININO">Feminino</option>
               <option value="MASCULINO">Masculino</option>
@@ -20,12 +20,12 @@
         </div>
 
         <div class="form-group">
-            <label for="name">Email</label>
+            <label for="email">Email</label>
             <input type="text" class="form-control" id="email" [(ngModel)]="pessoa.email" name="email">
         </div>
 
         <div class="form-group">
-            <label for="name">Data de Nascimento</label>
+            <label for="dataNascimento">Data de Nascimento</label>
             <div class="input-group">
               <input class="form-control" placeholder="dd/mm/aaaa" id="dataNascimento" name="dataNascimento" [(ngModel)]="pessoa.dataNascimento" readonly ngbDatepicker #d="ngbDatepicker">
               <div class="input-group-append">
@@ -35,17 +35,17 @@
         </div>
 
         <div class="form-group">
-            <label for="Naturalidade">Naturalidade</label>
+            <label for="naturalidade">Naturalidade</label>
             <input type="text" class="form-control" id="naturalidade" [(ngModel)]="pessoa.naturalidade" name="naturalidade">
         </div>
 
         <div class="form-group">
-            <label for="Nacionalidade">Nacionalidade</label>
+            <label for="nacionalidade">Nacionalidade</label>
             <input type="text" class="form-control" id="nacionalidade" [(ngModel)]="pessoa.nacionalidade" name="nacionalidade">
         </div>
 
         <div class="form-group">
-            <label for="Endereço">Endereço</label>
+            <label for="endereco">Endereço</label>
             <input type="text" class="form-control" id="endereco" required [(ngModel)]="pessoa.endereco" name="endereco">
         </div>
 

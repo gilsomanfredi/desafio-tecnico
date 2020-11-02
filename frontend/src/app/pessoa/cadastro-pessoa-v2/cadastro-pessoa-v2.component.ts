@@ -1,38 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { Pessoa } from '../model/pessoa/v1/pessoa';
-import { PessoaService } from '../service/pessoa/v1/pessoa.service';
-import { CustomNgbDateAdapter, CustomNgbDateParserFormatter } from '../util/custom-date-format';
+import { PessoaV2 } from '../model/v2/pessoa-v2';
+import { PessoaV2Service } from '../service/v2/pessoa-v2.service';
+import { CustomNgbDateAdapter, CustomNgbDateParserFormatter } from '../../util/custom-date-format';
 
 @Component({
-  selector: 'app-cadastro-pessoa',
-  templateUrl: './cadastro-pessoa.component.html',
-  styleUrls: ['./cadastro-pessoa.component.css'],
+  selector: 'app-cadastro-pessoa-v2',
+  templateUrl: './cadastro-pessoa-v2.component.html',
+  styleUrls: ['./cadastro-pessoa-v2.component.css'],
   providers: [
     {provide: NgbDateAdapter, useClass: CustomNgbDateAdapter},
     {provide: NgbDateParserFormatter, useClass: CustomNgbDateParserFormatter}
   ]
 })
-export class CadastroPessoaComponent implements OnInit {
+export class CadastroPessoaV2Component implements OnInit {
 
-  pessoa: Pessoa = new Pessoa();
+  pessoa: PessoaV2 = new PessoaV2();
   submitted = false;
 
-  constructor(private pessoaService: PessoaService) { }
+  constructor(private pessoaService: PessoaV2Service) { }
 
   ngOnInit() {
   }
 
   novo(): void {
     this.submitted = false;
-    this.pessoa = new Pessoa();
+    this.pessoa = new PessoaV2();
   }
 
   salvar() {
-    console.log(this.pessoa);
     this.pessoaService.insert(this.pessoa)
       .subscribe(data => console.log(data), error => console.log(error));
-    this.pessoa = new Pessoa();
+    this.pessoa = new PessoaV2();
   }
 
   onSubmit() {

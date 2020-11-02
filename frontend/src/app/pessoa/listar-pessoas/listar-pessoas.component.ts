@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Pessoa } from '../model/pessoa/v1/pessoa';
-import { PessoaV2Service } from '../service/pessoa/v2/pessoa-v2.service';
+import { Pessoa } from '../model/v1/pessoa';
+import { PessoaV2Service } from '../service/v2/pessoa-v2.service';
 
 @Component({
   selector: 'app-listar-pessoas',
