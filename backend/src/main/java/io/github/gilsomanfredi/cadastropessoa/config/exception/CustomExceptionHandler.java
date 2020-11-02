@@ -1,8 +1,6 @@
 package io.github.gilsomanfredi.cadastropessoa.config.exception;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import io.github.gilsomanfredi.cadastropessoa.model.apierror.ApiError;
 import io.github.gilsomanfredi.cadastropessoa.model.apierror.ApiFieldError;
@@ -20,7 +18,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import io.github.gilsomanfredi.cadastropessoa.config.i18n.I18n;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +28,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final @NonNull
     I18n i18n;
- 
+
     @ExceptionHandler(value = { ValidacaoException.class })
     protected ResponseEntity<Object> handleValidacao(ValidacaoException ex, WebRequest request) {
 
@@ -39,20 +36,20 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         var apiError = new ApiError(status, LocalDateTime.now(), i18n.getMessage(ex.getMessage(), ex.getArgs()));
 
         log.error(ex.getMessage(), ex);
-    	
-    	return handleExceptionInternal(ex, apiError, new HttpHeaders(), 
+
+    	return handleExceptionInternal(ex, apiError, new HttpHeaders(),
     			status, request);
     }
- 
+
     @ExceptionHandler(value = { Exception.class })
     protected ResponseEntity<Object> handleGeneric(Exception ex, WebRequest request) {
-    	
+
     	var status = HttpStatus.INTERNAL_SERVER_ERROR;
         var apiError = new ApiError(status, LocalDateTime.now(), i18n.getMessage("houve.erro.servidor"));
 
         log.error(ex.getMessage(), ex);
 
-    	return handleExceptionInternal(ex, apiError, new HttpHeaders(), 
+    	return handleExceptionInternal(ex, apiError, new HttpHeaders(),
     			status, request);
     }
 

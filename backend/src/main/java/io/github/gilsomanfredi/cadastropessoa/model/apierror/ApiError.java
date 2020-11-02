@@ -1,6 +1,5 @@
 package io.github.gilsomanfredi.cadastropessoa.model.apierror;
 
-import io.github.gilsomanfredi.cadastropessoa.config.exception.CustomExceptionHandler;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -11,7 +11,7 @@ public class SourceIntegrationTest extends RunApplicationTests {
     @Test
     public void get() {
 
-        ResponseEntity<String> responseGet = get("/source", String.class);
+        ResponseEntity<String> responseGet = getRestTemplate().get("/source", String.class);
 
         Assert.assertEquals(HttpStatus.OK, responseGet.getStatusCode());
         Assert.assertNotNull(responseGet.getBody());
