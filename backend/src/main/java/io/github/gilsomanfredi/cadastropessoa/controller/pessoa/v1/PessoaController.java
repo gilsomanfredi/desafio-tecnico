@@ -1,6 +1,7 @@
 package io.github.gilsomanfredi.cadastropessoa.controller.pessoa.v1;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -8,14 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v1.Pessoa;
 import io.github.gilsomanfredi.cadastropessoa.service.pessoa.v1.PessoaService;
@@ -32,9 +26,15 @@ public class PessoaController {
     PessoaService pessoaService;
 
     @GetMapping
-    public Page<Pessoa> findAll(Pageable pageable) {
+    public List<Pessoa> findAll() {
 
-        return pessoaService.findAll(pageable);
+        return pessoaService.findAll();
+    }
+
+    @GetMapping("/paginado")
+    public Page<Pessoa> findPaginado(Pageable pageable) {
+
+        return pessoaService.findPaginado(pageable);
     }
 
     @GetMapping("/{id}")

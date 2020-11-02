@@ -1,6 +1,7 @@
 package io.github.gilsomanfredi.cadastropessoa.controller.pessoa.v2;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -8,14 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.github.gilsomanfredi.cadastropessoa.model.pessoa.v2.PessoaV2;
 import io.github.gilsomanfredi.cadastropessoa.service.pessoa.v2.PessoaServiceV2;
@@ -32,9 +26,15 @@ public class PessoaControllerV2 {
     PessoaServiceV2 pessoaServiceV2;
 
     @GetMapping
-    public Page<PessoaV2> findAll(Pageable pageable) {
+    public List<PessoaV2> findAll() {
 
-        return pessoaServiceV2.findAll(pageable);
+        return pessoaServiceV2.findAll();
+    }
+
+    @GetMapping("/paginado")
+    public Page<PessoaV2> findPaginado(Pageable pageable) {
+
+        return pessoaServiceV2.findPaginado(pageable);
     }
 
     @GetMapping("/{id}")

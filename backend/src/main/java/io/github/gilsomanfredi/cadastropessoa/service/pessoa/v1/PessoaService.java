@@ -1,6 +1,7 @@
 package io.github.gilsomanfredi.cadastropessoa.service.pessoa.v1;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,14 @@ public class PessoaService {
     private final @NonNull
     PessoaValidator pessoaValidator;
 
-    public Page<Pessoa> findAll(Pageable pageable) {
+    public List<Pessoa> findAll() {
 
-        return pessoaRepository.findAll(pageable);
+        return pessoaRepository.findAll();
+    }
+
+    public Page<Pessoa> findPaginado(Pageable pageable) {
+
+        return pessoaRepository.findPaginado(pageable);
     }
 
     public Optional<Pessoa> findById(Long id) {

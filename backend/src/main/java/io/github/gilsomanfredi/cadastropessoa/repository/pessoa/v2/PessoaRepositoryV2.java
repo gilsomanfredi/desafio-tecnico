@@ -1,6 +1,7 @@
 package io.github.gilsomanfredi.cadastropessoa.repository.pessoa.v2;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,7 +24,12 @@ public class PessoaRepositoryV2 {
     private final @NonNull
     PostgresRepositoryTemplate repositoryTemplate;
 
-    public Page<PessoaV2> findAll(Pageable pageable) {
+    public List<PessoaV2> findAll() {
+
+        return repositoryTemplate.query(PessoaV2Sql.select, new PessoaRowMapperV2());
+    }
+
+    public Page<PessoaV2> findPaginado(Pageable pageable) {
 
         return repositoryTemplate.query(PessoaV2Sql.select, new PessoaRowMapperV2(), pageable);
     }
