@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaskModule } from 'ngx-mask';
 import { PessoaModule } from './pessoa/pessoa.module';
 import { AppRoutingModule } from './app-routing.module';
+import { SegurancaModule } from './seguranca/seguranca.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     AppRoutingModule,
     PessoaModule,
+    SegurancaModule,
 
     BrowserModule,
     FormsModule,
