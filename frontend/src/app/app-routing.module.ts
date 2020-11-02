@@ -6,7 +6,7 @@ import { ListarPessoasComponent } from './pessoa/listar-pessoas/listar-pessoas.c
 import { LoginComponent } from './seguranca/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'employee', pathMatch: 'full' },
+  { path: '', redirectTo: 'pessoas', pathMatch: 'full' },
   { path: 'pessoas', component: ListarPessoasComponent },
   { path: 'cadastro', component: CadastroPessoaComponent },
   { path: 'cadastroV2', component: CadastroPessoaV2Component },
