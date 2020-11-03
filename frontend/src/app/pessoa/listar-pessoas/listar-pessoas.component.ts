@@ -26,7 +26,6 @@ export class ListarPessoasComponent implements OnInit {
     this.pessoaV2Service.delete(id)
       .subscribe(
         data => {
-          console.log(data);
           this.load();
         },
         error => console.log(error));

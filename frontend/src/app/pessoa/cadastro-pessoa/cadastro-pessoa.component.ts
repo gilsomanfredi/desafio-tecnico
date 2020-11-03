@@ -29,14 +29,14 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
   salvar() {
-    console.log(this.pessoa);
     this.pessoaService.insert(this.pessoa)
-      .subscribe(data => console.log(data), error => console.log(error));
+      .subscribe(data => {
+        this.submitted = true;
+      }, error => console.log(error));
     this.pessoa = new Pessoa();
   }
 
   onSubmit() {
-    this.submitted = true;
     this.salvar();
   }
 }

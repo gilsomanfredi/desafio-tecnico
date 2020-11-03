@@ -30,12 +30,13 @@ export class CadastroPessoaV2Component implements OnInit {
 
   salvar() {
     this.pessoaService.insert(this.pessoa)
-      .subscribe(data => console.log(data), error => console.log(error));
+      .subscribe(data => {
+        this.submitted = true;
+      }, error => console.log(error));
     this.pessoa = new PessoaV2();
   }
 
   onSubmit() {
-    this.submitted = true;
     this.salvar();
   }
 }
