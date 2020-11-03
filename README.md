@@ -52,5 +52,5 @@ A aplicação está sendo testada com testes de integração utilizando o Spring
 
 ![alt text](https://github.com/gilsomanfredi/desafio-tecnico-softplan/blob/imagens/Convergencia%20dos%20testes%20de%20integra%C3%A7%C3%A3o.png "Convergencia dos testes de integração")
 
-![alt text](https://github.com/gilsomanfredi/desafio-tecnico-softplan/blob/imagens/Cadastro.png "Testes de integração")
+![alt text](https://github.com/gilsomanfredi/desafio-tecnico-softplan/blob/imagens/Testes.png "Testes de integração")
 
