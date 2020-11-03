@@ -11,7 +11,7 @@ public class SourceController {
     @GetMapping
     public String source() {
 
-        return "https://github.com/gilsomanfredi/desafio-tecnico-softplan";
+        return "https://github.com/gilsomanfredi/desafio-tecnico";
     }
 
 }
